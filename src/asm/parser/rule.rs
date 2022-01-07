@@ -11,6 +11,10 @@ pub fn parse_rule(
 
     while !state.parser.next_is(0, syntax::TokenKind::HeavyArrowRight)
     {
+        if state.parser.next_after_ignorable() {
+            rule.pattern_add_space();
+        }
+
         let tk = state.parser.advance();
         rule.span = rule.span.join(&tk.span);
 

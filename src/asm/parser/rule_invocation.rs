@@ -291,6 +291,28 @@ pub fn match_rule<'a>(
                     }
                 }
 
+                asm::PatternPart::Space =>
+                {
+                    if DEBUG
+                    {
+                        println!("- branch {}, try match boundary", branch_index);
+                    }
+
+                    if branch.parser.is_at_partial() || !branch.parser.next_after_ignorable()
+                    {
+                        branch.dead = true;
+                    }
+                    else
+                    {
+                        if DEBUG
+                        {
+                            println!("  branch {}, boundary matched! parser at `{}`",
+                                branch_index,
+                                fileserver.get_excerpt(&branch.parser.get_next_spans(100)));
+                        }
+                    }
+                }
+
                 asm::PatternPart::Parameter(param_index) =>
                 {
                     let param = &rule.parameters[*param_index];

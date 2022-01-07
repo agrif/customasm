@@ -501,6 +501,12 @@ impl<'a> Parser<'a>
 	{
 		self.read_linebreak || self.is_over()
 	}
+
+
+	pub fn next_after_ignorable(&self) -> bool
+	{
+		self.is_over() || self.tokens[self.index].after_ignorable
+	}
 	
 	
 	pub fn maybe_expect_linebreak(&mut self) -> Option<()>

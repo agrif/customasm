@@ -7,6 +7,7 @@ pub struct Token
 {
 	pub span: Span,
 	pub kind: TokenKind,
+	pub after_ignorable: bool,
 	pub excerpt: Option<String>
 }
 
@@ -278,6 +279,7 @@ where S: Into<String>
 		{
 			span: span,
 			kind: kind,
+			after_ignorable: tokens.last().map(|tok: &Token| tok.kind.ignorable()).unwrap_or(false),
 			excerpt: excerpt
 		};
 		
